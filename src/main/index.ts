@@ -2,6 +2,7 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+const { SerialPort } = require('serialport');
 
 function createWindow(): void {
   // Create the browser window.
@@ -21,6 +22,29 @@ function createWindow(): void {
     mainWindow.show()
   })
 
+
+  // 打开串口
+  const port = new SerialPort({
+    path: 'COM4',
+    baudRate: 19200,
+    dataBits: 8,
+    stopBits: 1,
+    parity: 'none',
+  });
+
+  // 监听串口数据
+  port.on('data', function (data) {
+    console.log('Data:', data.toString());
+  });
+
+  // 发送数据到串口
+  port.write('Hello from TypeScript!', function (err) {
+    if (err) {
+      console.error('Error writing to serial port:', err);
+    } else {
+      console.log('Data written to serial port');
+    }
+  });
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)
     return { action: 'deny' }
