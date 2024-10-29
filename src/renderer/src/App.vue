@@ -1,26 +1,21 @@
-<script setup lang="ts">
-import Versions from './components/Versions.vue'
-
-const ipcHandle = () => window.electron.ipcRenderer.send('ping')
-</script>
-
 <template>
-  <img alt="logo" class="logo" src="./assets/electron.svg" />
-  <div class="creator">Powered by electron-vite</div>
-  <div class="text">
-    Build an Electron app with
-    <span class="vue">Vue</span>
-    and
-    <span class="ts">TypeScript</span>
-  </div>
-  <p class="tip">Please try pressing <code>F12</code> to open the devTool</p>
-  <div class="actions">
-    <div class="action">
-      <a href="https://electron-vite.org/" target="_blank" rel="noreferrer">Documentation</a>
-    </div>
-    <div class="action">
-      <a target="_blank" rel="noreferrer" @click="ipcHandle">Send IPC</a>
+  <div class="container d-flex flex-column justify-content-center align-items-center" style="height: 100vh; background-color: #f2f2f2;">
+    <div class="content text-center p-4" style="background-color: #fff; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+      <button @click="openPort">输出端口信息</button>
+      <input v-model="com" placeholder="串口">
+      <input v-model="frequency" placeholder="频率">
+      <p>端口输出：{{ message }}</p>
     </div>
   </div>
-  <Versions />
 </template>
+
+<script setup>
+import { ref } from 'vue'
+const com = ref('')
+const frequency = ref('')
+const message = ref('')
+function openPort() {
+  // ...
+  message.value = "12312"
+}
+</script>
