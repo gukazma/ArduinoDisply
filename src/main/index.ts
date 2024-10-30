@@ -77,6 +77,27 @@ app.whenReady().then(() => {
   ipcMain.handle('ping', () => 'pong')
   ipcMain.handle('onport', (event, data) => {
     console.log(data)
+    const port = new SerialPort({
+      path: data.com,
+      baudRate: data.freg,
+      dataBits: 8,
+      stopBits: 1,
+      parity: 'none',
+    });
+    event.sender.send('reply', '我收到了消息'); 
+    // 监听串口数据
+    port.on('data', function (data) {
+      console.log('Data:', data.toString());
+    });
+
+    // 发送数据到串口
+    port.write('Hello from TypeScript!', function (err) {
+      if (err) {
+        console.error('Error writing to serial port:', err);
+      } else {
+        console.log('Data written to serial port');
+      }
+    });
     return data.com;
   })
 

@@ -10,10 +10,13 @@
 </template>
 
 <script setup>
-import { ref,onMounted } from 'vue'
+import { ref,onMounted} from 'vue'
 const com = ref('')
 const frequency = ref('')
 const message = ref('')
+window.electron.electronAPI.ipcRenderer.on("reply",(event,data)=>{
+    console.log(data);
+})
 function openPort() {
   // ...
   const func = async () => {
