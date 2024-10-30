@@ -10,12 +10,18 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref,onMounted } from 'vue'
 const com = ref('')
 const frequency = ref('')
 const message = ref('')
 function openPort() {
   // ...
   message.value = "12312"
+  const func = async () => {
+    const response = await window.electron.ping()
+    console.log(response) // prints out 'pong'
+  }
+  func()
+  window.electron.ping()
 }
 </script>
