@@ -75,6 +75,10 @@ app.whenReady().then(() => {
 
   // IPC test
   ipcMain.handle('ping', () => 'pong')
+  ipcMain.handle('onport', (event, data) => {
+    console.log(data)
+    return data.com;
+  })
 
   createWindow()
 

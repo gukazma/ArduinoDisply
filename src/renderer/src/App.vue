@@ -16,10 +16,16 @@ const frequency = ref('')
 const message = ref('')
 function openPort() {
   // ...
-  message.value = "12312"
   const func = async () => {
-    const response = await window.electron.ping()
-    console.log(response) // prints out 'pong'
+     var data = { 
+      com: '',
+      freg: ''
+     }
+     data.com = "COM0";
+     data.freg = 9600;
+    const response = await window.serialport.onport(data);
+    console.log(response);// prints out 'pong'
+    message.value = response;
   }
   func()
   window.electron.ping()

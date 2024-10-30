@@ -15,6 +15,9 @@ if (process.contextIsolated) {
       electronAPI,
       ping: () => ipcRenderer.invoke('ping')
     })
+    contextBridge.exposeInMainWorld('serialport', {
+      onport: (data) => ipcRenderer.invoke('onport', data)
+    })
   } catch (error) {
     console.error(error)
   }
